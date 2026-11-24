@@ -1,7 +1,6 @@
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,54 +12,38 @@
 
 <body>
 
-    <main class="container">
+    <div class="container">
 
-        <header class="top">
-            <span class="subtitle">A SPECIAL INVITATION</span>
-            <div class="heart">♡</div>
-        </header>
+        <h1>Hey Angel ❤️</h1>
 
-        <section class="content">
+        <h2>A Little Invitation</h2>
 
-            <p class="small-text">SOMETHING JUST FOR YOU</p>
+        <p>
+            I have something special to ask you.
+            Would you like to go on a date with me? 🥰
+        </p>
 
-            <h1>Hello, Angel<span>!</span></h1>
+        <div class="response-buttons">
 
-            <h2>I have something to ask you...</h2>
+            <button onclick="acceptDate()">
+                Yes ❤️
+            </button>
 
-            <p class="message">
-                Some moments become special because of the people
-                we share them with. I'd love the opportunity to
-                create a beautiful memory with you.
-            </p>
+            <button onclick="maybeLater()">
+                Maybe later 😊
+            </button>
 
-            <div class="invitation">
-                <span class="rose">🌹</span>
-                <h3>Would you go on a date with me?</h3>
-                <p>A little time together, a lovely conversation,
-                and a beautiful memory.</p>
-            </div>
+            <button onclick="sayNo()">
+                No 🙈
+            </button>
 
-            <div class="buttons">
+        </div>
 
-                <button id="yesBtn" class="yes-button">
-                    I'd love to! ❤️
-                </button>
+        <div id="responseMessage"></div>
 
-                <button id="noBtn" class="no-button">
-                    Maybe another time
-                </button>
+    </div>
 
-            </div>
-
-        </section>
-
-        <footer>
-            Made with thought and care ♡
-        </footer>
-
-    </main>
-
+    <!-- Connect JavaScript -->
     <script src="script.js"></script>
 
 </body>

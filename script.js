@@ -1,132 +1,94 @@
 
-const container = document.querySelector(".container");
+// YES BUTTON
+function acceptDate() {
+    showDatePlanning();
+}
 
-const yesBtn = document.getElementById("yesBtn");
-const noBtn = document.getElementById("noBtn");
-
-yesBtn.addEventListener("click", function () {
-    container.innerHTML = `
-        <div class="heart">♡</div>
-        <p class="subtitle">LET'S MAKE A PLAN</p>
-        <h1>Wonderful!</h1>
-        <p class="message">
-            Where would you prefer us to go, Angel?
-        </p>
-
-        <div class="buttons">
-            <button onclick="choosePlace('Restaurant')">🍽️ Restaurant</button>
-            <button onclick="choosePlace('Beach')">🌊 Beach</button>
-            <button onclick="choosePlace('Cinema')">🎬 Cinema</button>
-            <button onclick="choosePlace('Picnic')">🧺 Picnic</button>
-            <button onclick="choosePlace('Somewhere else')">✨ Somewhere else</button>
-        </div>
-
-        <footer>You can choose what feels comfortable for you ❤️</footer>
-    `;
-});
-
-noBtn.addEventListener("click", function () {
-    container.innerHTML = `
-        <div class="heart">♡</div>
-        <h1>That's okay.</h1>
-        <p class="message">
-            Thanks for taking the time to read my invitation.
-            No pressure at all. Wishing you a lovely day, Angel.
-        </p>
-    `;
-});
-
-function choosePlace(place) {
-    container.innerHTML = `
-        <div class="heart">🌹</div>
-        <p class="subtitle">THE NEXT LITTLE DETAIL</p>
-        <h1>Lovely choice!</h1>
-        <h2>${place}</h2>
-        <p class="message">Which date would you prefer?</p>
-
-        <label for="date">Your preferred date</label>
-        <input type="date" id="date">
-
-        <label for="time">Your preferred time</label>
-        <select id="time">
-            <option value="">Choose a time</option>
-            <option>Morning</option>
-            <option>Afternoon</option>
-            <option>Evening</option>
-        </select>
-
-        <div class="buttons">
-            <button onclick="confirmChoice('${place}')" class="yes-button">
-                Review my choice ❤️
-            </button>
-            <button onclick="goBack()" class="no-button">
-                Go back
-            </button>
-        </div>
+// MAYBE LATER BUTTON
+function maybeLater() {
+    document.getElementById("responseMessage").innerHTML = `
+        <h2>Take your time, beautiful ❤️</h2>
+        <p>Think about it. I'll be waiting for your response, beautiful.</p>
+        <p>No pressure. Take all the time you need 😊</p>
+        <button onclick="showHome()">Back to invitation</button>
     `;
 }
 
-function confirmChoice(place) {
+// NO BUTTON
+function sayNo() {
+    document.getElementById("responseMessage").innerHTML = `
+        <h2>Wait a minute, Angel! 😂❤️</h2>
+        <p>Can I make one little case for this date?</p>
+        <p>Good company, lovely conversations and a memorable time together.</p>
+
+        <button onclick="acceptDate()">Okay, let's go! ❤️</button>
+        <button onclick="finalNo()">My answer is still no</button>
+    `;
+}
+
+// FINAL NO
+function finalNo() {
+    document.getElementById("responseMessage").innerHTML = `
+        <h2>No worries, Angel ❤️</h2>
+        <p>Thank you for being honest. I respect your decision.</p>
+    `;
+}
+
+// DATE PLANNING
+function showDatePlanning() {
+    document.getElementById("responseMessage").innerHTML = `
+        <h2>Yay! Let's plan our date 🥰</h2>
+        <p>Where would you like us to go?</p>
+
+        <select id="location">
+            <option value="">Choose a location</option>
+            <option value="Restaurant">🍽️ Restaurant</option>
+            <option value="Beach">🏖️ Beach</option>
+            <option value="Cinema">🎬 Cinema</option>
+            <option value="Picnic">🌳 Picnic</option>
+            <option value="Somewhere else">💕 Somewhere else</option>
+        </select>
+
+        <br><br>
+
+        <label>Choose your preferred date:</label>
+        <br>
+        <input type="date" id="date">
+
+        <br><br>
+
+        <label>Choose your preferred time:</label>
+        <br>
+        <input type="time" id="time">
+
+        <br><br>
+
+        <button onclick="submitDate()">Submit ❤️</button>
+    `;
+}
+
+// SUBMIT DATE PREFERENCES
+function submitDate() {
+    const location = document.getElementById("location").value;
     const date = document.getElementById("date").value;
     const time = document.getElementById("time").value;
 
-    if (!date || !time) {
-        alert("Please select both a date and time 😊");
+    if (!location || !date || !time) {
+        alert("Please select a location, date and time 😊");
         return;
     }
 
-    const selectedDate = new Date(date + "T12:00:00");
-    const formattedDate = selectedDate.toLocaleDateString(
-        "en-GB",
-        { day: "numeric", month: "long", year: "numeric" }
-    );
-
-    container.innerHTML = `
-        <div class="heart">💗</div>
-        <p class="subtitle">YOUR PREFERENCE</p>
-        <h1>Thank you, Angel!</h1>
-
-        <div class="invitation">
-            <h3>Here's what you selected:</h3>
-            <p>📍 Place: ${place}</p>
-            <p>📅 Date: ${formattedDate}</p>
-            <p>🕒 Time: ${time}</p>
-        </div>
-
-        <p class="message">
-            These are your preferences, not a confirmed booking.
-            We can discuss the details together.
-        </p>
-
-        <button class="yes-button" onclick="shareChoice()">
-            Share my preference ❤️
-        </button>
-
-        <button class="no-button" onclick="goBack()">
-            Start again
-        </button>
+    document.getElementById("responseMessage").innerHTML = `
+        <h2>Thank you, Angel! ❤️</h2>
+        <p>Your preferred plans:</p>
+        <p>📍 Location: ${location}</p>
+        <p>📅 Date: ${date}</p>
+        <p>⏰ Time: ${time}</p>
+        <p>I'll look forward to discussing our plans with you! 🥰</p>
     `;
-
-    window.currentChoice = { place, date, time };
 }
 
-function shareChoice() {
-    const choice = window.currentChoice;
-
-    if (!choice) return;
-
-    const message =
-        `Hi! My date invitation preference is:\n` +
-        `Place: ${choice.place}\n` +
-        `Date: ${choice.date}\n` +
-        `Time: ${choice.time}`;
-
-    const whatsappURL =
-        "https://wa.me/?text=" + encodeURIComponent(message);
-
-    window.open(whatsappURL, "_blank");
-}
-
-function goBack() {
-    location.reload();
+// BACK TO INVITATION
+function showHome() {
+    document.getElementById("responseMessage").innerHTML = "";
 }
